@@ -1,7 +1,7 @@
 {
     "id": "org.xiphos.Xiphos",
     "runtime": "org.gnome.Platform",
-    "runtime-version": "3.34",
+    "runtime-version": "41",
     "sdk": "org.gnome.Sdk",
     "command": "xiphos",
     "rename-desktop-file": "xiphos.desktop",
@@ -9,7 +9,8 @@
     "rename-appdata-file": "xiphos.appdata.xml",
     "finish-args": [
         /* X11 + XShm access */
-        "--share=ipc", "--socket=x11",
+        "--share=ipc",
+        "--socket=fallback-x11",
         "--socket=wayland",
         /* Allow communication with network to get content */
         "--share=network",
@@ -17,10 +18,17 @@
         "--persist=.xiphos",
         "--talk-name=org.gnome.GConf"
     ],
-    "cleanup": ["/include", "*.a", "*.la", "/lib/pkgconfig", "/share/gtk-doc", "/share/pkgconfig"],
+    "cleanup": [
+        "/include",
+        "*.a",
+        "*.la",
+        "/lib/pkgconfig",
+        "/share/gtk-doc",
+        "/share/pkgconfig"
+    ],
     "modules": [
     "shared-modules/intltool/intltool-0.51.json",
-    "shared-modules/dbus-glib/dbus-glib-0.110.json",
+    "shared-modules/dbus-glib/dbus-glib.json",
     "shared-modules/python2.7/python-2.7.json",
     {
         "name": "python2-libxml2",
@@ -30,8 +38,8 @@
         "sources": [
             {
                 "type": "archive",
-                "url": "ftp://xmlsoft.org/libxml2/libxml2-2.9.9.tar.gz",
-                "sha256": "94fb70890143e3c6549f265cee93ec064c80a84c42ad0f23e85ee1fd6540a871"
+                "url": "ftp://xmlsoft.org/libxml2/libxml2-2.9.12.tar.gz",
+                "sha256": "c8d6681e38c56f172892c85ddc0852e1fd4b53b4209e7f4ebf17f7e2eae71d92"
             }
         ]
     },
@@ -42,8 +50,8 @@
         "sources": [
             {
                 "type": "archive",
-                "url": "https://ftp.gnome.org/pub/gnome/sources/libgsf/1.14/libgsf-1.14.43.tar.xz",
-                "sha256": "12944e3d6d9a6e4071e89dbf58348e1e93544f5f9266dd1a107a28d8001cee16"
+                "url" : "https://download.gnome.org/sources/libgsf/1.14/libgsf-1.14.47.tar.xz",
+                "sha256" : "d188ebd3787b5375a8fd38ee6f761a2007de5e98fa0cf5623f271daa67ba774d"
             }
         ]
     },
@@ -120,7 +128,7 @@
         "sources": [
             {
                 "type": "archive",
-                "url": "http://ftp.gnome.org/pub/GNOME/sources/gnome-doc-utils/0.20/gnome-doc-utils-0.20.10.tar.xz",
+                "url": "https://ftp.gnome.org/pub/GNOME/sources/gnome-doc-utils/0.20/gnome-doc-utils-0.20.10.tar.xz",
                 "sha256": "cb0639ffa9550b6ddf3b62f3b1add92fb92ab4690d351f2353cffe668be8c4a6"
             },
             {
@@ -139,7 +147,7 @@
         "sources": [
                 {
                     "type": "archive",
-                    "url": "http://ftp.gnome.org/pub/GNOME/sources/gtkhtml/4.10/gtkhtml-4.10.0.tar.xz",
+                    "url": "https://ftp.gnome.org/pub/GNOME/sources/gtkhtml/4.10/gtkhtml-4.10.0.tar.xz",
                     "sha256": "ca3b6424fb2c7ac5d9cb8fdafb69318fa2e825c9cf6ed17d1e38d9b29e5606c3"
                 }
             ],
@@ -157,18 +165,42 @@
         ]
     },
     {
+        "name": "minizip",
+        "subdir": "contrib/minizip",
+        "no-autogen": false,
+        "sources": [
+            {
+                "type": "archive",
+                "url": "https://zlib.net/zlib-1.2.11.tar.gz",
+                "sha256": "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1"
+            },
+            {
+                "type": "script",
+                "dest": "contrib/minizip",
+                "dest-filename": "autogen.sh",
+                "commands": [
+                    "autoreconf -vfi"
+                ]
+            }
+        ]
+    },
+    {
         "name": "xiphos",
-        "buildsystem": "simple",
-        "build-commands": [
-            "./waf configure --prefix=/app --enable-webkit2 --gtk=3",
-            "./waf build",
-            "./waf install"
+        "buildsystem": "cmake-ninja",
+        "builddir": true,
+        "config-opts": [
+            "-DGTKHTML=ON",
+            "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
         ],
         "sources": [
             {
                 "type": "archive",
-                "url": "https://github.com/crosswire/xiphos/releases/download/4.1.0/xiphos-4.1.0.tar.gz",
-                "sha256": "52e2f415339b6ccef7049f5812707c617b4dbdb6ba40bf0f5a5210e04f75f849"
+                "url": "https://github.com/crosswire/xiphos/releases/download/4.2.1/xiphos-4.2.1.tar.xz",
+                "sha256": "d34353f62224302c924757fca55ff0fc19f96815f20b893279ceef3d7d054128"
+            },
+            {
+                "type": "patch",
+                "path": "patches/xiphos-build.patch"
             }
         ]
         }

@@ -1,0 +1,48 @@
+diff --git a/cmake/XiphosDependencies.cmake b/cmake/XiphosDependencies.cmake
+index 0a135b44..c607e0c3 100644
+--- a/cmake/XiphosDependencies.cmake
++++ b/cmake/XiphosDependencies.cmake
+@@ -89,6 +89,7 @@ pkg_check_modules(Gnome REQUIRED IMPORTED_TARGET
+   "minizip"
+   "zlib"
+   "libxml-2.0>=2.7.8"
++  "dbus-glib-1"
+   )
+ 
+ # Gtk dependencies
+diff --git a/desktop/xiphos.appdata.xml b/desktop/xiphos.appdata.xml
+index 14b82ca7..b087ca59 100644
+--- a/desktop/xiphos.appdata.xml
++++ b/desktop/xiphos.appdata.xml
+@@ -61,4 +61,8 @@
+  <updatecontact>xiphos-devel@crosswire.org</updatecontact>
+  <project_group>GNOME</project_group>
+  <translation type="gettext">Xiphos</translation>
++ <content_rating type="oars-1.1" />
++ <releases>
++   <release version="4.2.1" date="2020-05-07" />
++ </releases>
+ </component>
+diff --git a/src/main/sword.h b/src/main/sword.h
+index 05185a6b..dac1ee5d 100644
+--- a/src/main/sword.h
++++ b/src/main/sword.h
+@@ -22,14 +22,15 @@
+ #ifndef _SWORD_H__
+ #define _SWORD_H__
+ 
+-#ifdef __cplusplus
+-extern "C" {
+-#endif
+ #include <gtk/gtk.h>
+ #include <glib/gi18n.h>
+ 
+ #include "main/configs.h"
+ 
++#ifdef __cplusplus
++extern "C" {
++#endif
++
+ /*** these defs need to be seen by gui and backend ***/
+ 
+ /* module types */
