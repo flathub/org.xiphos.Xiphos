@@ -30,6 +30,7 @@
     "shared-modules/intltool/intltool-0.51.json",
     "shared-modules/dbus-glib/dbus-glib.json",
     "shared-modules/python2.7/python-2.7.json",
+    "shared-modules/libsoup/libsoup-2.4.json",
     {
         "name": "python2-libxml2",
         "config-opts": [
@@ -181,23 +182,6 @@
                 "commands": [
                     "autoreconf -vfi"
                 ]
-            }
-        ]
-    },
-    {
-        "name": "libsoup-2.4",
-        "buildsystem": "meson",
-        "config-opts": [
-            "-Dvapi=disabled",
-            "-Dtests=false",
-            "-Dtls_check=false",
-            "-Dntlm=disabled"
-        ],
-        "sources": [
-            {
-                "type": "archive",
-                "url": "https://gitlab.gnome.org/GNOME/libsoup/-/archive/2.74.3/libsoup-2.74.3.tar.gz",
-                "sha256": "2e7a1313c2223c7e70cda90a8c02c679ab2bf3935c07b5bb028a9b5550411b96"
             }
         ]
     },
