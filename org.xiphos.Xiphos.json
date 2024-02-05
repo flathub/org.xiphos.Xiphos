@@ -8,11 +8,9 @@
     "rename-icon": "xiphos",
     "rename-appdata-file": "xiphos.appdata.xml",
     "finish-args": [
-        /* X11 + XShm access */
         "--share=ipc",
         "--socket=fallback-x11",
         "--socket=wayland",
-        /* Allow communication with network to get content */
         "--share=network",
         "--persist=.sword",
         "--persist=.xiphos",
@@ -27,232 +25,251 @@
         "/share/pkgconfig"
     ],
     "modules": [
-    "shared-modules/intltool/intltool-0.51.json",
-    "shared-modules/dbus-glib/dbus-glib.json",
-    "shared-modules/python2.7/python-2.7.json",
-    "shared-modules/libsoup/libsoup-2.4.json",
-    {
-        "name": "python2-libxml2",
-        "config-opts": [
-            "--with-python=python2"
-        ],
-        "sources": [
-            {
-                "type": "archive",
-                "url": "https://gitlab.gnome.org/GNOME/libxml2/-/archive/v2.11.5/libxml2-v2.11.5.tar.bz2",
-                "sha256": "ab3699b697e917c7d5035e81d237a9bc895eb4bf70c0a2259c6d1f125c1b77b6"
-            }
-        ]
-    },
-    {
-        "name": "libgsf",
-        "config-opts": ["--disable-static"],
-        "cleanup": ["/bin"],
-        "sources": [
-            {
-                "type": "archive",
-                "url" : "https://download.gnome.org/sources/libgsf/1.14/libgsf-1.14.47.tar.xz",
-                "sha256" : "d188ebd3787b5375a8fd38ee6f761a2007de5e98fa0cf5623f271daa67ba774d"
-            }
-        ]
-    },
-    {
-        "name": "gconf",
-        "cleanup": ["/bin", "/share/aclocal"],
-        "config-opts": [ "--disable-static", "--disable-gtk-doc", "--disable-orbit",
-                            "--disable-introspection" ],
-        "sources": [
-            {
-                "type": "archive",
-                "url": "https://download.gnome.org/sources/GConf/3.2/GConf-3.2.6.tar.xz",
-                "sha256": "1912b91803ab09a5eed34d364bf09fe3a2a9c96751fde03a4e0cfa51a04d784c"
-            }
-        ]
-    },
-    {
-        "name": "biblesync",
-        "buildsystem": "cmake-ninja",
-        "config-opts": [
-            "-DBUILD_SHARED_LIBS=ON"
-        ],
-        "sources": [
-            {
-                "type": "archive",
-                "url": "https://github.com/karlkleinpaste/biblesync/releases/download/1.2.0/biblesync-1.2.0.tar.gz",
-                "sha256": "3c94f0de9e85a3564fbea7c36acfe175462d424eefbbad929cb3bc520e6a229f"
-            }
-        ]
-    },
-    {
-        "name": "sword",
-        "buildsystem": "cmake-ninja",
-        "builddir": true,
-        "sources": [
-            {
-                "type": "archive",
-                "url": "http://crosswire.org/ftpmirror/pub/sword/source/v1.8/sword-1.8.1.tar.gz",
-                "sha256": "ce9aa8f721a737f406115d35ff438bd07c829fce1605f0d6dcdabc4318bc5e93"
-            },
-            {
-                "type": "patch",
-                "paths": [
-                    "patches/sword-1.8.1-icu61.diff"
-                ]
-            }
-        ]
-    },
-    {
-        "name": "rarian",
-        "config-opts": ["--disable-static"],
-        "cleanup": ["/bin"],
-        "rm-configure": true,
-        "sources": [
-            {
-                "type": "archive",
-                "url": "https://rarian.freedesktop.org/Releases/rarian-0.8.1.tar.bz2",
-                "sha256": "aafe886d46e467eb3414e91fa9e42955bd4b618c3e19c42c773026b205a84577"
-            },
-            {
-                "type": "script",
-                "dest-filename": "autogen.sh",
-                "commands": [
-                    "cp -p /usr/share/automake-*/config.{sub,guess} .",
-                    "autoconf -f -B build/autoconf_prepend-include"
-                ]
-            }
-        ]
-    },
-    {
-        "name": "gnome-doc-utils",
-        "cleanup": ["*"],
-        "rm-configure": true,
-        "sources": [
-            {
-                "type": "archive",
-                "url": "https://ftp.gnome.org/pub/GNOME/sources/gnome-doc-utils/0.20/gnome-doc-utils-0.20.10.tar.xz",
-                "sha256": "cb0639ffa9550b6ddf3b62f3b1add92fb92ab4690d351f2353cffe668be8c4a6"
-            },
-            {
-                "type": "script",
-                "dest-filename": "autogen.sh",
-                "commands": [
-                    "cp -p /usr/share/automake-*/config.{sub,guess} .",
-                    "autoconf -f -B build/autoconf_prepend-include"
-                ]
-            }
-        ]
-    },
-    {
-        "name": "libgtkhtml4",
-        "cleanup": ["/bin"],
-        "sources": [
+        "shared-modules/intltool/intltool-0.51.json",
+        "shared-modules/dbus-glib/dbus-glib.json",
+        "shared-modules/python2.7/python-2.7.json",
+        "shared-modules/libsoup/libsoup-2.4.json",
+        {
+            "name": "python2-libxml2",
+            "config-opts": [
+                "--with-python=python2"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://gitlab.gnome.org/GNOME/libxml2/-/archive/v2.11.5/libxml2-v2.11.5.tar.bz2",
+                    "sha256": "ab3699b697e917c7d5035e81d237a9bc895eb4bf70c0a2259c6d1f125c1b77b6"
+                }
+            ]
+        },
+        {
+            "name": "libgsf",
+            "config-opts": [
+                "--disable-static"
+            ],
+            "cleanup": [
+                "/bin"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://download.gnome.org/sources/libgsf/1.14/libgsf-1.14.47.tar.xz",
+                    "sha256": "d188ebd3787b5375a8fd38ee6f761a2007de5e98fa0cf5623f271daa67ba774d"
+                }
+            ]
+        },
+        {
+            "name": "gconf",
+            "cleanup": [
+                "/bin",
+                "/share/aclocal"
+            ],
+            "config-opts": [
+                "--disable-static",
+                "--disable-gtk-doc",
+                "--disable-orbit",
+                "--disable-introspection"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://download.gnome.org/sources/GConf/3.2/GConf-3.2.6.tar.xz",
+                    "sha256": "1912b91803ab09a5eed34d364bf09fe3a2a9c96751fde03a4e0cfa51a04d784c"
+                }
+            ]
+        },
+        {
+            "name": "biblesync",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DBUILD_SHARED_LIBS=ON"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/karlkleinpaste/biblesync/releases/download/1.2.0/biblesync-1.2.0.tar.gz",
+                    "sha256": "3c94f0de9e85a3564fbea7c36acfe175462d424eefbbad929cb3bc520e6a229f"
+                }
+            ]
+        },
+        {
+            "name": "sword",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://crosswire.org/ftpmirror/pub/sword/source/v1.8/sword-1.8.1.tar.gz",
+                    "sha256": "ce9aa8f721a737f406115d35ff438bd07c829fce1605f0d6dcdabc4318bc5e93"
+                },
+                {
+                    "type": "patch",
+                    "paths": [
+                        "patches/sword-1.8.1-icu61.diff"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "rarian",
+            "config-opts": [
+                "--disable-static"
+            ],
+            "cleanup": [
+                "/bin"
+            ],
+            "rm-configure": true,
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://rarian.freedesktop.org/Releases/rarian-0.8.1.tar.bz2",
+                    "sha256": "aafe886d46e467eb3414e91fa9e42955bd4b618c3e19c42c773026b205a84577"
+                },
+                {
+                    "type": "script",
+                    "dest-filename": "autogen.sh",
+                    "commands": [
+                        "cp -p /usr/share/automake-*/config.{sub,guess} .",
+                        "autoconf -f -B build/autoconf_prepend-include"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "gnome-doc-utils",
+            "cleanup": [
+                "*"
+            ],
+            "rm-configure": true,
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://ftp.gnome.org/pub/GNOME/sources/gnome-doc-utils/0.20/gnome-doc-utils-0.20.10.tar.xz",
+                    "sha256": "cb0639ffa9550b6ddf3b62f3b1add92fb92ab4690d351f2353cffe668be8c4a6"
+                },
+                {
+                    "type": "script",
+                    "dest-filename": "autogen.sh",
+                    "commands": [
+                        "cp -p /usr/share/automake-*/config.{sub,guess} .",
+                        "autoconf -f -B build/autoconf_prepend-include"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "libgtkhtml4",
+            "cleanup": [
+                "/bin"
+            ],
+            "sources": [
                 {
                     "type": "archive",
                     "url": "https://ftp.gnome.org/pub/GNOME/sources/gtkhtml/4.10/gtkhtml-4.10.0.tar.xz",
                     "sha256": "ca3b6424fb2c7ac5d9cb8fdafb69318fa2e825c9cf6ed17d1e38d9b29e5606c3"
                 }
             ],
-        "modules": [
-            {
-                "name": "enchant",
-                "sources": [
-                    {
-                        "type": "archive",
-                        "url": "https://github.com/AbiWord/enchant/releases/download/enchant-1-6-1/enchant-1.6.1.tar.gz",
-                        "sha256": "bef0d9c0fef2e4e8746956b68e4d6c6641f6b85bd2908d91731efb68eba9e3f5"
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "name": "minizip",
-        "subdir": "contrib/minizip",
-        "no-autogen": false,
-        "sources": [
-            {
-                "type": "archive",
-                "url": "https://zlib.net/zlib-1.3.1.tar.gz",
-                "sha256": "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23"
-            },
-            {
-                "type": "script",
-                "dest": "contrib/minizip",
-                "dest-filename": "autogen.sh",
-                "commands": [
-                    "autoreconf -vfi"
-                ]
-            }
-        ]
-    },
-    {
-        "name": "unifdef",
-        "no-autogen": true,
-        "make-install-args": [
-            "prefix=${FLATPAK_DEST}"
-        ],
-        "sources": [
-            {
-                "type": "archive",
-                "url": "https://dotat.at/prog/unifdef/unifdef-2.12.tar.xz",
-                "sha256": "43ce0f02ecdcdc723b2475575563ddb192e988c886d368260bc0a63aee3ac400"
-            }
-        ],
-        "cleanup": [
-            "*"
-        ]
-    },
-    {
-        "name": "webkit2gtk-4.0",
-        "buildsystem": "cmake-ninja",
-        "cleanup": [
-            "/include",
-            "/lib/pkgconfig",
-            "/share/gir-1.0",
-            "*.a"
-        ],
-        "config-opts": [
-            "-DPORT=GTK",
-            "-DCMAKE_BUILD_TYPE=Release",
-            "-DENABLE_BUBBLEWRAP_SANDBOX=OFF",
-            "-DENABLE_DOCUMENTATION=OFF",
-            "-DENABLE_GAMEPAD=OFF",
-            "-DENABLE_WEBDRIVER=OFF",
-            "-DUSE_SOUP2=ON"
-        ],
-        "sources": [
-            {
-                "type": "archive",
-                "url": "https://webkitgtk.org/releases/webkitgtk-2.42.0.tar.xz",
-                "sha256": "828f95935861fae583fb8f2ae58cf64c63c178ae2b7c2d6f73070813ad64ed1b",
-                "x-checker-data": {
-                    "type": "html",
-                    "url": "https://webkitgtk.org/releases/",
-                    "version-pattern": "LATEST-STABLE-(\\d[\\.\\d]+\\d)",
-                    "url-template": "https://webkitgtk.org/releases/webkitgtk-$version.tar.xz"
+            "modules": [
+                {
+                    "name": "enchant",
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://github.com/AbiWord/enchant/releases/download/enchant-1-6-1/enchant-1.6.1.tar.gz",
+                            "sha256": "bef0d9c0fef2e4e8746956b68e4d6c6641f6b85bd2908d91731efb68eba9e3f5"
+                        }
+                    ]
                 }
-            }
-        ]
-    },
-    {
-        "name": "xiphos",
-        "buildsystem": "cmake-ninja",
-        "builddir": true,
-        "config-opts": [
-            "-DGTKHTML=ON",
-            "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
-        ],
-        "sources": [
-            {
-                "type": "archive",
-                "url": "https://github.com/crosswire/xiphos/releases/download/4.2.1/xiphos-4.2.1.tar.xz",
-                "sha256": "d34353f62224302c924757fca55ff0fc19f96815f20b893279ceef3d7d054128"
-            },
-            {
-                "type": "patch",
-                "path": "patches/xiphos-build.patch"
-            }
-        ]
+            ]
+        },
+        {
+            "name": "minizip",
+            "subdir": "contrib/minizip",
+            "no-autogen": false,
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://zlib.net/zlib-1.3.1.tar.gz",
+                    "sha256": "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23"
+                },
+                {
+                    "type": "script",
+                    "dest": "contrib/minizip",
+                    "dest-filename": "autogen.sh",
+                    "commands": [
+                        "autoreconf -vfi"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "unifdef",
+            "no-autogen": true,
+            "make-install-args": [
+                "prefix=${FLATPAK_DEST}"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://dotat.at/prog/unifdef/unifdef-2.12.tar.xz",
+                    "sha256": "43ce0f02ecdcdc723b2475575563ddb192e988c886d368260bc0a63aee3ac400"
+                }
+            ],
+            "cleanup": [
+                "*"
+            ]
+        },
+        {
+            "name": "webkit2gtk-4.0",
+            "buildsystem": "cmake-ninja",
+            "cleanup": [
+                "/include",
+                "/lib/pkgconfig",
+                "/share/gir-1.0",
+                "*.a"
+            ],
+            "config-opts": [
+                "-DPORT=GTK",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DENABLE_BUBBLEWRAP_SANDBOX=OFF",
+                "-DENABLE_DOCUMENTATION=OFF",
+                "-DENABLE_GAMEPAD=OFF",
+                "-DENABLE_WEBDRIVER=OFF",
+                "-DUSE_SOUP2=ON"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://webkitgtk.org/releases/webkitgtk-2.42.5.tar.xz",
+                    "sha256": "b64278c1f20b8cfdbfb5ff573c37d871aba74a1db26d9b39f74e8953fe61e749",
+                    "x-checker-data": {
+                        "type": "html",
+                        "url": "https://webkitgtk.org/releases/",
+                        "version-pattern": "LATEST-STABLE-(\\d[\\.\\d]+\\d)",
+                        "url-template": "https://webkitgtk.org/releases/webkitgtk-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "xiphos",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DGTKHTML=ON",
+                "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/crosswire/xiphos/releases/download/4.2.1/xiphos-4.2.1.tar.xz",
+                    "sha256": "d34353f62224302c924757fca55ff0fc19f96815f20b893279ceef3d7d054128"
+                },
+                {
+                    "type": "patch",
+                    "path": "patches/xiphos-build.patch"
+                }
+            ]
         }
     ]
 }
