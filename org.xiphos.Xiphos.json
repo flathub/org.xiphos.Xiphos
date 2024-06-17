@@ -203,6 +203,28 @@
         ]
     },
     {
+        "name": "libwpe",
+        "buildsystem": "cmake-ninja",
+        "sources": [
+            {
+                "type": "archive",
+                "url": "https://github.com/WebPlatformForEmbedded/libwpe/releases/download/1.16.0/libwpe-1.16.0.tar.xz",
+                "sha256": "c7f3a3c6b3d006790d486dc7cceda2b6d2e329de07f33bc47dfc53f00f334b2a"
+            }
+        ]
+    },
+    {
+        "name": "wpebackend-fdo",
+        "buildsystem": "meson",
+        "sources": [
+            {
+                "type": "archive",
+                "url": "https://github.com/Igalia/WPEBackend-fdo/releases/download/1.14.2/wpebackend-fdo-1.14.2.tar.xz",
+                "sha256": "93c9766ae9864eeaeaee2b0a74f22cbca08df42c1a1bdb55b086f2528e380d38"
+            }
+        ]
+    },
+    {
         "name": "webkit2gtk-4.0",
         "buildsystem": "cmake-ninja",
         "cleanup": [
