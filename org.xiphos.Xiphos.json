@@ -240,13 +240,15 @@
             "-DENABLE_DOCUMENTATION=OFF",
             "-DENABLE_GAMEPAD=OFF",
             "-DENABLE_WEBDRIVER=OFF",
+            "-DUSE_LIBBACKTRACE=OFF",
+            "-DUSE_GTK4=OFF",
             "-DUSE_SOUP2=ON"
         ],
         "sources": [
             {
                 "type": "archive",
-                "url": "https://webkitgtk.org/releases/webkitgtk-2.42.0.tar.xz",
-                "sha256": "828f95935861fae583fb8f2ae58cf64c63c178ae2b7c2d6f73070813ad64ed1b",
+                "url": "https://webkitgtk.org/releases/webkitgtk-2.44.2.tar.xz",
+                "sha256": "523f42c8ff24832add17631f6eaafe8f9303afe316ef1a7e1844b952a7f7521b",
                 "x-checker-data": {
                     "type": "html",
                     "url": "https://webkitgtk.org/releases/",
