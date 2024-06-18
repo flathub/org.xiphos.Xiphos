@@ -1,0 +1,35 @@
+From e5865a39288a3047efcdc8056844b6be16ddfb0c Mon Sep 17 00:00:00 2001
+From: AsciiWolf <mail@asciiwolf.com>
+Date: Tue, 18 Jun 2024 23:18:19 +0200
+Subject: [PATCH] Fix appdata file
+
+Fixes three remaining AppStream errors
+
+"unknown-tag updatecontact",
+"cid-missing-affiliation-gnome",
+"appstream-missing-developer-name"
+---
+ desktop/xiphos.appdata.xml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/desktop/xiphos.appdata.xml b/desktop/xiphos.appdata.xml
+index d8b1ed41..c92ca23c 100644
+--- a/desktop/xiphos.appdata.xml
++++ b/desktop/xiphos.appdata.xml
+@@ -5,6 +5,7 @@
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0+</project_license>
+  <name>Xiphos</name>
++ <developer_name>The Xiphos Developer Team</developer_name>
+  <summary>Bible Study Guide</summary>
+  <launchable type="desktop-id">xiphos.desktop</launchable>
+  <description>
+@@ -58,7 +59,6 @@
+   </screenshot>
+  </screenshots>
+  <url type="homepage">https://github.com/crosswire/xiphos/</url>
+- <updatecontact>xiphos-devel@crosswire.org</updatecontact>
+- <project_group>GNOME</project_group>
++ <update_contact>xiphos-devel@crosswire.org</update_contact>
+  <translation type="gettext">Xiphos</translation>
+ </component>
