@@ -1,7 +1,7 @@
 {
     "id": "org.xiphos.Xiphos",
     "runtime": "org.gnome.Platform",
-    "runtime-version": "48",
+    "runtime-version": "49",
     "sdk": "org.gnome.Sdk",
     "command": "xiphos",
     "rename-desktop-file": "xiphos.desktop",
@@ -14,7 +14,8 @@
         "--share=network",
         "--persist=.sword",
         "--persist=.xiphos",
-        "--talk-name=org.gnome.GConf"
+        "--talk-name=org.gnome.GConf",
+        "--device=dri"
     ],
     "cleanup": [
         "/include",
@@ -25,13 +26,13 @@
         "/share/pkgconfig"
     ],
     "modules": [
-        "shared-modules/intltool/intltool-0.51.json",
         "shared-modules/dbus-glib/dbus-glib.json",
         {
             "name": "biblesync",
             "buildsystem": "cmake-ninja",
             "config-opts": [
-                "-DBUILD_SHARED_LIBS=ON"
+                "-DBUILD_SHARED_LIBS=ON",
+                "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
             ],
             "sources": [
                 {
@@ -48,8 +49,6 @@
         },
         {
             "name": "sword",
-            "buildsystem": "cmake-ninja",
-            "builddir": true,
             "sources": [
                 {
                     "type": "archive",
@@ -57,48 +56,9 @@
                     "sha256": "42409cf3de2faf1108523e2c5ac0745d21f9ed2a5c78ed878ee9dcc303426b8a",
                     "x-checker-data": {
                         "type": "anitya",
-                        "project-id": 230546,
+                        "project-id": 16287,
                         "url-template": "http://crosswire.org/ftpmirror/pub/sword/source/v${version0}.${version1}/sword-$version.tar.gz"
                     }
-                }
-            ]
-        },
-        {
-            "name": "rarian",
-            "config-opts": [
-                "--disable-static"
-            ],
-            "cleanup": [
-                "/bin"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://gitlab.freedesktop.org/rarian/rarian/-/releases/0.8.6/downloads/assets/rarian-0.8.6.tar.bz2",
-                    "sha256": "9d4f7873009d2e31b8b1ec762606b12bee5526e1fe75de48e9495382bfef2bea",
-                    "x-checker-data": {
-                        "type": "anitya",
-                        "project-id": 227350,
-                        "url-template": "https://gitlab.freedesktop.org/rarian/rarian/-/releases/$version/downloads/assets/rarian-$version.tar.bz2"
-                    }
-                }
-            ],
-            "modules": [
-                {
-                    "name": "tinyxml2",
-                    "buildsystem": "meson",
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://github.com/leethomason/tinyxml2/archive/refs/tags/11.0.0.tar.gz",
-                            "sha256": "5556deb5081fb246ee92afae73efd943c889cef0cafea92b0b82422d6a18f289",
-                            "x-checker-data": {
-                                "type": "anitya",
-                                "project-id": 4976,
-                                "url-template": "https://github.com/leethomason/tinyxml2/archive/refs/tags/$version.tar.gz"
-                            }
-                        }
-                    ]
                 }
             ]
         },
@@ -140,7 +100,7 @@
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 14018,
-                        "url-template": "https://github.com/hughsie/appstream-glib/archive/refs/tags/appstream_glib_$version.tar.gz"
+                        "url-template": "https://github.com/hughsie/appstream-glib/archive/refs/tags/appstream_glib_${version0}_${version1}_${version2}.tar.gz"
                     }
                 }
             ]
