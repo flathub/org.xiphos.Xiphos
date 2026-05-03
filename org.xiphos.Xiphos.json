@@ -19,11 +19,11 @@
     ],
     "cleanup": [
         "/include",
-        "*.a",
-        "*.la",
         "/lib/pkgconfig",
-        "/share/gtk-doc",
-        "/share/pkgconfig"
+        "/share/doc",
+        "/share/man",
+        "*.la",
+        "*.a"
     ],
     "modules": [
         "shared-modules/dbus-glib/dbus-glib.json",
@@ -91,11 +91,13 @@
             ]
         },
         {
-            "name": "appstream",
+            "name": "appstream-glib",
             "buildsystem": "meson",
             "config-opts": [
                 "-Drpm=false"
             ],
+            "//note": "Required to build the Xiphos module. You can remove its artifacts after installation",
+            "cleanup": ["*"],
             "sources": [
                 {
                     "type": "archive",
